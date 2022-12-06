@@ -38,13 +38,6 @@ class Nollaus:
         self.lue_syote = lue_syote
 
     def suorita(self):
-        arvo = 0
-
-        try:
-            arvo = int(self.lue_syote())
-        except Exception:
-            pass
-
         self.sovelluslogiikka.nollaa()
 
 class Kumoa:
@@ -53,14 +46,16 @@ class Kumoa:
         self.lue_syote = lue_syote
 
     def suorita(self):
-        pass
+        if self.sovelluslogiikka.edelliset:
+            self.sovelluslogiikka.aseta_arvo(self.sovelluslogiikka.edelliset.pop())
+        else:
+            self.sovelluslogiikka.aseta_arvo(0)
 
 class Komento(Enum):
     SUMMA = 1
     EROTUS = 2
     NOLLAUS = 3
     KUMOA = 4
-
 
 class Kayttoliittyma:
     def __init__(self, sovelluslogiikka, root):
